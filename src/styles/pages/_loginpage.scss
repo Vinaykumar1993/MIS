@@ -1,0 +1,27 @@
+.login_wrapper{
+	background-color: var(--primary-color);
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	// padding-top: 50px;
+	.login_box{
+		margin: 0 auto;
+		max-width: 450px;
+		.login_page{
+		background: rgba(255, 255, 255, 0.8);
+		border-radius: 5px;
+		padding: 15px;
+		.loginform{
+			.login_btn{
+				background: var(--primary-color);
+				outline: 0;
+				border-color: var(--primary-color);
+				width:100%;
+				&:focus,&:hover,&:active{					
+					background: var(--primary-color);
+				}
+			}
+		}
+	}
+}
+}

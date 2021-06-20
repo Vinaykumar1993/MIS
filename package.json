@@ -1,0 +1,61 @@
+{
+  "name": "MIS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "public/electron.js",
+  "scripts": {
+    "start": "webpack --mode development",
+    "dev": "webpack serve --open ",
+    "build": "webpack --mode production",
+    "electron-pack": "electron-builder  -c.extraMetadata.main=build/electron.js",
+    "preelectron-pack": "webpack --mode production",
+    "start-electron": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
+  },
+  "author": "Vinay Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.12.13",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
+    "babel-loader": "^8.2.2",
+    "bootstrap": "^4.6.0",
+    "css-loader": "^5.1.3",
+    "file-loader": "^6.2.0",
+    "formik": "^2.2.9",
+    "html-webpack-plugin": "^5.3.1",
+    "node-sass": "^6.0.0",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.6.1",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "yup": "^0.32.9"
+  },
+   "win": {
+    "icon": "./build/logo512.png"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^9.0.0",
+    "electron": "^5.0.8",
+    "electron-builder": "^21.1.5",
+    "webpack": "^5.27.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

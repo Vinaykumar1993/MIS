@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/bootstrap";
+@import "./fonts";
+:root{
+	--primary-color:#02226d;
+	--secondary-color:#b3cde0;
+}
+body{
+	*{
+		font-family: poppins_regular;
+	}
+}
+@import "common";
+@import "pages/loginpage";
