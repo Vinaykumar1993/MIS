@@ -5,10 +5,10 @@
   "main": "public/electron.js",
   "scripts": {
     "start": "webpack --mode development",
-    "dev": "webpack serve --open ",
+    "dev": "webpack serve  --env development --mode development ",
     "build": "webpack --mode production",
     "electron-pack": "electron-builder  -c.extraMetadata.main=build/electron.js",
-    "preelectron-pack": "webpack --mode production",
+    "preelectron-pack": "webpack --mode production --env electron",
     "start-electron": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
   },
   "author": "Vinay Kumar",
@@ -35,15 +35,16 @@
     "style-loader": "^2.0.0",
     "yup": "^0.32.9"
   },
-   "win": {
+  "win": {
     "icon": "./build/logo512.png"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^9.0.0",
     "electron": "^5.0.8",
     "electron-builder": "^21.1.5",
+    "mini-css-extract-plugin": "^0.11.3",
     "webpack": "^5.27.2",
-    "webpack-cli": "^4.5.0",
+    "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
   },
   "browserslist": {

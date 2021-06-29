@@ -1,30 +1,19 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
 import Login from "@pages/Login";
-export default function App() {
+import Home from "@pages/Home";
+export default function Routes() {
   return (
     <Router>
         <Switch>
-          <Route path="/"><Login />
-          </Route>
+          <Route  path="/" exact ><Login /></Route>
+          <Route  path="/home"><Home /></Route>
         </Switch>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
 }

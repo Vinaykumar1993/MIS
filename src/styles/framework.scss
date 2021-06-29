@@ -1,8 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
+@import "@fontawesome/css/all.min.css";
 @import "./fonts";
 :root{
 	--primary-color:#02226d;
 	--secondary-color:#b3cde0;
+	--red-color:#fd0909;
 }
 body{
 	*{
@@ -11,3 +13,4 @@ body{
 }
 @import "common";
 @import "pages/loginpage";
+@import "components/template_master";

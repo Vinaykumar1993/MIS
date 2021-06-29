@@ -4,6 +4,7 @@ const path = require('path');
 // const isDev = require('electron-is-dev');
 
 let mainWindow = null;
+const gotTheLock = app.requestSingleInstanceLock()
 app.on('ready', createWindow);
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
@@ -15,6 +16,21 @@ app.on('activate', function () {
     createWindow()
   }
 });
+    
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+    
+  // Create myWindow, load the rest of the app, etc...
+}
+
 app.on("browser-window-created",function(e,window) {
 window.setMenu(null);
 });

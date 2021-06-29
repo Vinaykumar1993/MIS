@@ -2,11 +2,11 @@
  import { useFormik } from 'formik';
  import * as Yup from 'yup';
  import {Form,Button} from 'react-bootstrap';
-
+import { useHistory } from "react-router-dom";
  
 
  const LoginForm = () => {
-
+  let history = useHistory();
    const formik = useFormik({
      initialValues: {
        userName: '',
@@ -18,6 +18,7 @@
      }),
 
      onSubmit: values => {
+      history.push('/home');
        alert(JSON.stringify(values, null, 2));
      }
    });
@@ -54,7 +55,7 @@
         </Form.Text>
         ) : null}
       </Form.Group>
- 
+        <a className="forgot_pwd_link" href="#">Forgot Password ?</a>
       <div className="btn_wrapper pt-2 text-center">
       <Button className="login_btn btn-lg" as="input" variant="primary" type="submit" value="Submit" />
       </div>

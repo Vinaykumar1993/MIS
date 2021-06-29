@@ -1,6 +1,6 @@
 .login_wrapper{
 	background-color: var(--primary-color);
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	// padding-top: 50px;
@@ -20,6 +20,11 @@
 				&:focus,&:hover,&:active{					
 					background: var(--primary-color);
 				}
+			}
+			.forgot_pwd_link{
+				display: block;
+				text-align: right;
+				color: var(--primary-color);
 			}
 		}
 	}
