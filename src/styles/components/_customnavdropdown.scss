@@ -12,5 +12,39 @@
 	.dropdown-item {
 		padding-top:10px;
 		padding-bottom:10px;
+		&.active_children{
+		background: $nav-highlight-color;
 	}
+	}
+.dropdown_layer_nav{
+	position: relative;
+	.children_arrow{
+		position: absolute;
+right: 3px;
+top: 0;
+bottom: 0;
+margin: auto;
+width: 14px;
+height: 15px;
+width: 15px;
+height: 100%;
+opacity: 0.8;
+display: flex;
+align-items: center;
+justify-content: center;
+	}
+}
+}
+.custom_dropdown {
+
+		a{
+			position: relative;
+		&.active_master{
+		color:$nav-highlight-color;
+			}
+	}
+			.children_arrow{
+				position: absolute;
+				right:0;
+			}
 }

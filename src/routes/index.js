@@ -10,11 +10,11 @@ import Login from "@pages/Login";
 import Home from "@pages/Home";
 export default function Routes() {
   return (
-    <Router>
+    <BrowserRouter>
         <Switch>
           <Route  path="/" exact ><Login /></Route>
           <Route  path="/home"><Home /></Route>
         </Switch>
-    </Router>
+    </BrowserRouter>
   );
 }

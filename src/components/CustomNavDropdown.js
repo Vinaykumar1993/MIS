@@ -2,10 +2,12 @@ import React,{useEffect} from 'react';
 import ReactDOM from "react-dom";
 import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 
-	const eventlistenerhandler= function(evt) {
+	const eventlistenerhandler= function(evt,sendactive=null) {
         let flyoutEl = document.querySelector('.dropdown_container'),
         flyoutElText = document.querySelectorAll('.custom_dropdown'),
+        flyoutElNav_link = document.querySelectorAll('.custom_dropdown .nav-link'),
         childelem = document.querySelectorAll('.dropdown_container.children'),
+        navbardropdowns=document.querySelectorAll('.navbar .custom_dropdown a'),
           targetEl = evt.target; // clicked element   
 			let somefilter   = Array.prototype.some,
 				result   = flyoutElText,
@@ -14,11 +16,18 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
                     // console.log("targetel",targetEl)
 				return node==targetEl;
 			});
-                console.log("targetel",flyoutEl,"=====",targetEl)
+                let somefilter1   = Array.prototype.some,
+                result1   = flyoutElNav_link,
+                filtered1 = somefilter1.call( result1, function( node ) {
+
+                    // console.log("targetel",targetEl)
+                return node==targetEl;
+            });
+                // console.log("targetel",flyoutEl,"=====",targetEl)
 				// console.log('flyoutElText',flyoutElText);
         do {
-          if((targetEl == flyoutEl)||filtered) {
-          	console.log("clicking inside")
+          if((targetEl == flyoutEl)||filtered ||filtered1) {
+          	// console.log("clicking inside")
           	return;
           }
           // Go up the DOM
@@ -26,8 +35,10 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
         } while (targetEl);
         // This is a click outside.
         if(flyoutEl){
+            navbardropdowns&&navbardropdowns.forEach((elem)=>elem.classList.remove('active_master'));
         	flyoutEl.remove();
         	childelem&&childelem.forEach((elem)=>elem.remove());
+            sendactive&&sendactive(null);
         }else{
         	document.removeEventListener("click",eventlistenerhandler);
         }
@@ -35,21 +46,59 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
 
         // document.getElementById("flyout-debug").textContent = "Clicked outside!";
       }
-    const getboundingpoints = (e,title="",children,dropdowns) => {
+    const getboundingpoints = (e,title="",children,dropdowns,sendactive=null) => {
         e.preventDefault();
+        let dropdownelems=e.currentTarget&&e.currentTarget.classList&&e.currentTarget.parentElement,
+        dropdown_floating_items=dropdownelems&&dropdownelems.querySelectorAll('.dropdown-item');
+        dropdown_floating_items&&dropdown_floating_items.forEach((elem)=>elem.classList.remove('active_children'))
+        // console.log("dropdowns",dropdownelems)
     	// document.removeEventListener("click",eventlistenerhandler);
         let boundingpoints = e.currentTarget.getBoundingClientRect();
+        // console.log('e.currentTarget',)
+        let parenttext=e.currentTarget.innerText;
         let boundingpointsForParent = document.querySelector('.dropdown_container.parent')&&document.querySelector('.dropdown_container.parent').getBoundingClientRect();
-        console.log('boundingpoints',boundingpoints);
+        // console.log('boundingpoints',boundingpoints);
+        // let parenttext=document.querySelector('.dropdown_container.parent')&&
         let lastdropdown=!dropdowns || (dropdowns&&dropdowns.length==0);
         let createElem = document.createElement('div');
-        createElem.setAttribute('class', `dropdown_container ${children?`children ${lastdropdown?'last':''}`:'parent'}`);
+        createElem.setAttribute('class', `dropdown_container ${children?`children ${lastdropdown?'last':''}`:`parent`}`);
+        createElem.setAttribute('title_nav',`${children?parenttext:parenttext}`)
         let getparentWidth=boundingpointsForParent?boundingpointsForParent.width:0;
         createElem.style.top=(children?(boundingpoints.y):(boundingpoints.top+boundingpoints.height+boundingpoints.y))+"px";
         createElem.style.left=(children?((getparentWidth+boundingpoints.left)):boundingpoints.left)+"px";
         let checkDom = document.querySelector('.dropdown_container');
         let childelem = document.querySelectorAll('.dropdown_container.children');
-
+        let childelem_all = document.querySelectorAll('.dropdown_container');
+        // if(sendactive){
+            setTimeout(()=>{
+            let parentactiveclass=document.querySelector('.dropdown_container.parent'),
+            parentname=parentactiveclass&&parentactiveclass.getAttribute('title_nav'),
+            navbardropdowns=document.querySelectorAll('.navbar .custom_dropdown a'),
+            newchildelems=document.querySelectorAll('.dropdown_container.children'),
+            dropdownchildrens_items=document.querySelectorAll('.custom_dropdown.dropdown-item'),
+            setactivedrop=navbardropdowns&&navbardropdowns.forEach((node)=>{
+                node.classList.remove('active_master');
+                if(node.innerText==parentname){
+                    node.classList.add('active_master')
+                }
+            }),
+            setactivetrackdrop=newchildelems&&newchildelems.forEach((node)=>{
+                let titlenav=node.getAttribute('title_nav'),
+                drp_down_childrens=Array.prototype.find,
+                findelem=drp_down_childrens.call(dropdownchildrens_items,(nodeelem)=>nodeelem.innerText==titlenav),
+                parentElems=findelem&&findelem.parentElement&&findelem.parentElement.parentElement,
+                childrens=parentElems&&parentElems.querySelectorAll('.dropdown-item');
+                // console.log("childrens",parentElems);
+                childrens&&childrens.forEach((nodechildren)=>{
+                    if(nodechildren.innerText==titlenav){
+                        nodechildren.classList.add('active_children');
+                    }else{
+                        nodechildren.classList.remove('active_children');
+                    }
+                })
+            })
+        },100)
+        // }
  
         if (checkDom) {
         	if(!children){	
@@ -67,7 +116,7 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
 				return filtered
 				},
 				getIndex=arrayIndex.call(result,(elem)=>somefilterfunction(elem.querySelectorAll('.custom_dropdown'),e.target));
-				console.log("arrayIndex",getIndex)
+				// console.log("arrayIndex",getIndex)
 				// if(getIndex>-1){
 				childelem&&childelem.forEach((elem,index)=>{
 				if(index>getIndex){
@@ -92,29 +141,28 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
         
         // document.body.appendChild(dropdown);
     }
-const CustomNavDropown = ({ title,dropdowns }) => {
-    const destroyElem=(e)=>{
-    	let checkDom = document.querySelector('.dropdown_container');
-    	if(checkDom){
-    		// checkDom.remove();
-    	}
-    	// e.currentTarget.removeChild()
+const CustomNavDropown = ({ title,dropdowns,sendactive,active_nav }) => {
+    // console.log("dropdown_avail",active_nav)
+    const checkdropdowncontainer=()=>{
+        let dropdown_exists=document.querySelector('.dropdown_container')
+        return dropdown_exists?true:null;
     }
     return (
-        <div className="custom_dropdown" onMouseOver={(e)=>getboundingpoints(e,title,null,dropdowns)} onClick={(e)=>getboundingpoints(e,title,null,dropdowns)}>
+        <div className={`custom_dropdown`} onMouseOver={(e)=>checkdropdowncontainer()&&getboundingpoints(e,title,null,dropdowns,sendactive)} onClick={(e)=>getboundingpoints(e,title,null,dropdowns,sendactive)}>
 				  <Nav.Link >{title}</Nav.Link>
 			</div>
     )
 }
-export const Dropdown = ({title,dropdowns}) => {
+export const Dropdown = ({title,dropdowns,sendactive=null,parent}) => {
 	useEffect(()=>{
-		document.addEventListener("click",eventlistenerhandler);
+		document.addEventListener("click",(e)=>eventlistenerhandler(e,sendactive));
 		// return document.removeEventListener("click",eventlistenerhandler);
 	},[title])
+    // console.log('parent',parent)
     return (
-        <div className="dropdown_layer">
-        {dropdowns.map((obj)=>{
-        	return obj.children? <NavDropdown.Item className="custom_dropdown" onMouseOver={(e)=>getboundingpoints(e,title,true,obj.children)} onClick={(e)=>getboundingpoints(e,title,true,obj.children)}>{obj.title}</NavDropdown.Item>:<NavDropdown.Item className="custom_dropdown" onMouseOver={(e)=>getboundingpoints(e,title,true,null)}>{obj.title}</NavDropdown.Item>
+        <div className={`dropdown_layer`}>
+        {dropdowns&&dropdowns.map((obj)=>{
+        	return obj.children? <div className="dropdown_layer_nav"><NavDropdown.Item className={`custom_dropdown `}  onMouseOver={(e)=>getboundingpoints(e,title,true,obj.children)}>{obj.title}</NavDropdown.Item><i className="children_arrow fas fa-angle-right"></i></div>:<NavDropdown.Item className="custom_dropdown" onMouseOver={(e)=>getboundingpoints(e,title,true,null)}>{obj.title}</NavDropdown.Item>
         })
         }	 
 		</div>
