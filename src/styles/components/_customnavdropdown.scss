@@ -9,11 +9,14 @@
 	// padding: 5px 18px;
 	z-index: 1023;
 	transition:0.4s;
+	// padding: 4px;
 	.dropdown-item {
-		padding-top:10px;
-		padding-bottom:10px;
+		font-size: 14px;
+		// padding-top:10px;
+		// padding-bottom:10px;
 		&.active_children{
 		background: $nav-highlight-color;
+
 	}
 	}
 .dropdown_layer_nav{

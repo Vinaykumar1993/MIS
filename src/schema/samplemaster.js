@@ -4,10 +4,10 @@ const sampleschema=[{
 },
 {
 	"name":"secondname",
-	"placeholder":"Second Name"
+	"placeholder":"Middle Name"
 },
 {
 	"name":"thirdname",
-	"placeholder":"Third Name"
+	"placeholder":"Last Name"
 }]
 export default sampleschema;
