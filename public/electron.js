@@ -38,7 +38,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1024,
     height: 1024,
-    title: "MIS"
+    title: "MIS",
+    icon: 'src/favicon.ico',
   });
   mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
   mainWindow.on('closed', function () {

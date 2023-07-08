@@ -16,7 +16,7 @@ const ItemCategory =(props)=>{
 	return(
 		<div>
 		<Templatemaster>
-			<Templatemaster.TmpBreadCrumb addclick={()=>setshowmodal(true)}/>
+			<Templatemaster.TmpBreadCrumb title="Item Category Master" addclick={()=>setshowmodal(true)}/>
 			<Templatemaster.TmpTable/>
 			<Templatemaster.TmpModal title={"Item Category"} size="lg" show={showmodal} handleClose={setshowmodal}>
 				<Templatemaster.TmpForm onCancel={setshowmodal} fields={fields} initialvalues={initialvalues} yupschema={yupschema} />

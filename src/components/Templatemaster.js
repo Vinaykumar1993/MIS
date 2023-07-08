@@ -1,13 +1,14 @@
 import React from 'react';
-import {Table,Button,Breadcrumb,Navbar,Modal,Pagination,Form,Row,Col} from 'react-bootstrap';
+import {Table,Button,Breadcrumb,Navbar,Pagination,Form,Modal,Row,Col} from 'react-bootstrap';
  import { useFormik } from 'formik';
+ import Select from 'react-select'
  // import * as Yup from 'yup';
-const TmpBreadCrumb=({addclick})=>{
+const TmpBreadCrumb=({addclick, title = ""})=>{
 	return(
 			<Navbar>
 				<Breadcrumb>
 					<Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-					<Breadcrumb.Item active>Item Master</Breadcrumb.Item>
+					<Breadcrumb.Item active>{title}</Breadcrumb.Item>
 				</Breadcrumb>
 				<Navbar.Collapse className="justify-content-end">
 					<Button variant="primary" size="sm" onClick={()=>addclick&&addclick()} >
@@ -79,13 +80,40 @@ const TmpPagination = (props)=>{
 </Pagination>
 		)
 }
+const renderInputs = (obj, formik, initialvalues) => {
+        const { type, placeholder, name, label } = obj;
+      const isDropdown = type === 'DropDown';
+      const isCheckbox = type === 'Checkbox';
+
+  return (
+    <>
+    { isDropdown ? <div className="select_container"><Select /></div> : isCheckbox ? <div><Form.Check
+            inline
+            label={label}
+            onChange={(e)=>formik.setFieldValue(name, e.target.checked)}
+            name={obj.name}
+            checked={formik.values[name]}
+            type="checkbox"
+            id={`inline-checkbox-1`}
+          /></div> :
+
+        <Form.Control 
+        onChange={formik.handleChange} 
+        onBlur={formik.handleBlur} 
+        value={formik.values[obj.name]} 
+        name={obj.name} type="text" 
+        placeholder={placeholder} />
+      }
+    </>
+      )
+}
 const TmpForm = ({initialvalues,yupschema,fields,...rest}) => {
 
    const formik = useFormik({
      initialValues:initialvalues,
      validationSchema: yupschema,
      onSubmit: values => {
-       alert(JSON.stringify(values, null, 2));
+      //  alert(JSON.stringify(values, null, 2));
      }
    });
    return (
@@ -93,16 +121,12 @@ const TmpForm = ({initialvalues,yupschema,fields,...rest}) => {
      <form onSubmit={formik.handleSubmit} className="loginform1">
      <Row>
      {fields&&fields.map((obj,field_index)=>{
+      const enableLabel = obj.type!=='Checkbox';
      	return(
-     		<Col md={6} key={`field_index_${field_index}`}>
+     		<Col md={6} className="form_input_container" key={`field_index_${field_index}`}>
      		 <Form.Group controlId="formBasicUsername">
-        <Form.Label>{obj.placeholder}</Form.Label>
-        <Form.Control 
-        onChange={formik.handleChange} 
-        onBlur={formik.handleBlur} 
-        value={formik.values[obj.name]} 
-        name={obj.name} type="text" 
-        placeholder={obj.placeholder} />
+          <Form.Label>{obj.placeholder}</Form.Label>
+        {renderInputs(obj, formik,initialvalues)}
         {formik.touched[obj.name] && formik.errors[obj.name] ? (
           <Form.Text className="text-muted error-text pl-1">
         {formik.errors[obj.name]}
@@ -112,6 +136,7 @@ const TmpForm = ({initialvalues,yupschema,fields,...rest}) => {
       </Col>  
      		)
      })}
+
      </Row>
       <div className="btn_wrapper pt-2 text-right">
       <Button className="login_btn btn-lg mr-3"  as="input" onClick={()=>rest.onCancel&&rest.onCancel(false)} variant="danger" type="button"  value="Cancel" />

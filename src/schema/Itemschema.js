@@ -1,10 +1,12 @@
 const Itemschema=[{
 	"name":"category_name",
-	"placeholder":"Category Name"
+	"placeholder":"Category Name",
+	"type": 'DropDown'
 },
 {
 	"name":"group_name",
-	"placeholder":"Group Name"
+	"placeholder":"Group Name",
+	"type": 'DropDown'
 },
 {
 	"name":"item_code",
@@ -32,6 +34,8 @@ const Itemschema=[{
 },
 {
 	"name":"status",
-	"placeholder":"Status"
+	"placeholder":"Status",
+	"type": "Checkbox",
+	"label": 'Active',
 }]
 export default Itemschema;

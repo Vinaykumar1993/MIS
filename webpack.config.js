@@ -109,7 +109,8 @@ module.exports =(env)=> {
         { from: "public/manifest.json", to: "." },
         { from: "public/favicon.ico", to: "." },
         { from: "public/logo192.png", to: "." },
-        { from: "public/logo512.png", to: "." }
+        { from: "public/logo512.png", to: "." },
+
       ],
     }),
   ],

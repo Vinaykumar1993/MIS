@@ -1,6 +1,7 @@
 const Itemgroupschema=[{
 	"name":"category_name",
-	"placeholder":"Category Name"
+	"placeholder":"Category Name",
+	"type": "DropDown"
 },
 {
 	"name":"group_name",
@@ -12,6 +13,8 @@ const Itemgroupschema=[{
 },
 {
 	"name":"status",
-	"placeholder":"Status"
+	"placeholder":"Active",
+	"type": "Checkbox"
+
 }]
 export default Itemgroupschema;

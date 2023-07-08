@@ -1,10 +1,13 @@
-const Itemschema=[{
+const SupplierSchema=[{
 	"name":"supplier_name",
 	"placeholder":"Supplier Name"
 },
 {
 	"name":"contact_person1",
 	"placeholder":"Contact Person 1"
+},{
+	"name":"contact_person2",
+	"placeholder":"Contact Person 2"
 },
 {
 	"name":"phone1",
@@ -40,6 +43,8 @@ const Itemschema=[{
 },
 {
 	"name":"status",
-	"placeholder":"Status"
+	"placeholder":"Status",
+	"type": "Checkbox",
+	"label": 'Active',
 }]
-export default Itemschema;
+export default SupplierSchema;

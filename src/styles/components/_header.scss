@@ -1,6 +1,13 @@
 .custom_header{
+	padding-top:0;
+	padding-bottom: 0;
 	.custom_dropdown {
+		height: 45px;
+		display: inline-flex;
+		align-items: center;
 		>a{
+			padding-top:0;
+			padding-bottom: 0; 
 			color:$white-color;
 		}
 	}

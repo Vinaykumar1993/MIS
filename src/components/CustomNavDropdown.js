@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
 import ReactDOM from "react-dom";
 import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { useHistory } from "react-router-dom";
 
 	const eventlistenerhandler= function(evt,sendactive=null) {
         let flyoutEl = document.querySelector('.dropdown_container'),
@@ -41,12 +42,24 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
             sendactive&&sendactive(null);
         }else{
         	document.removeEventListener("click",eventlistenerhandler);
+            document.removeEventListener("mouseover",eventlistenerhandler);
+
         }
           	// return;
 
         // document.getElementById("flyout-debug").textContent = "Clicked outside!";
       }
-    const getboundingpoints = (e,title="",children,dropdowns,sendactive=null) => {
+      const removeEveryDropdowns = () => {
+        let flyoutEl = document.querySelector('.dropdown_container'),
+        flyoutElText = document.querySelectorAll('.custom_dropdown'),
+        flyoutElNav_link = document.querySelectorAll('.custom_dropdown .nav-link'),
+        childelem = document.querySelectorAll('.dropdown_container.children'),
+        navbardropdowns=document.querySelectorAll('.navbar .custom_dropdown a');
+            navbardropdowns&&navbardropdowns.forEach((elem)=>elem.classList.remove('active_master'));
+            flyoutEl.remove();
+            childelem&&childelem.forEach((elem)=>elem.remove());
+      }
+    const getboundingpoints = (e,title="",children,dropdowns,sendactive=null, history) => {
         e.preventDefault();
         let dropdownelems=e.currentTarget&&e.currentTarget.classList&&e.currentTarget.parentElement,
         dropdown_floating_items=dropdownelems&&dropdownelems.querySelectorAll('.dropdown-item');
@@ -126,7 +139,7 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
         	}
             if(dropdowns){
                   ReactDOM.render(
-                    <Dropdown dropdowns={dropdowns} title={title}/>,
+                    <Dropdown history={history} dropdowns={dropdowns} title={title}/>,
                     children?document.body.appendChild(createElem):createElem
                 );
               }
@@ -134,7 +147,7 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
         	// },2000)
         } else {
             ReactDOM.render(
-                <Dropdown dropdowns={dropdowns} title={title}/>,
+                <Dropdown history={history} dropdowns={dropdowns} title={title}/>,
                 document.body.appendChild(createElem)
             );
         }
@@ -143,26 +156,34 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
     }
 const CustomNavDropown = ({ title,dropdowns,sendactive,active_nav }) => {
     // console.log("dropdown_avail",active_nav)
+    const history = useHistory();
     const checkdropdowncontainer=()=>{
         let dropdown_exists=document.querySelector('.dropdown_container')
         return dropdown_exists?true:null;
     }
     return (
-        <div className={`custom_dropdown`} onMouseOver={(e)=>checkdropdowncontainer()&&getboundingpoints(e,title,null,dropdowns,sendactive)} onClick={(e)=>getboundingpoints(e,title,null,dropdowns,sendactive)}>
+        <div className={`custom_dropdown`} onMouseOver={(e)=>checkdropdowncontainer()&&getboundingpoints(e,title,null,dropdowns,sendactive,history)} onClick={(e)=>getboundingpoints(e,title,null,dropdowns,sendactive,history)}>
 				  <Nav.Link >{title}</Nav.Link>
 			</div>
     )
 }
-export const Dropdown = ({title,dropdowns,sendactive=null,parent}) => {
+const sendNavLink = (obj,history) => {
+    history && history.push(obj.href);
+    removeEveryDropdowns("");
+}
+export const Dropdown = ({title,dropdowns,sendactive=null,parent, history}) => {
+    console.log('history', history)
 	useEffect(()=>{
 		document.addEventListener("click",(e)=>eventlistenerhandler(e,sendactive));
+        document.addEventListener("mouseover",(e)=>eventlistenerhandler(e,sendactive));
+
 		// return document.removeEventListener("click",eventlistenerhandler);
 	},[title])
     // console.log('parent',parent)
     return (
         <div className={`dropdown_layer`}>
         {dropdowns&&dropdowns.map((obj)=>{
-        	return obj.children? <div className="dropdown_layer_nav"><NavDropdown.Item className={`custom_dropdown `}  onMouseOver={(e)=>getboundingpoints(e,title,true,obj.children)}>{obj.title}</NavDropdown.Item><i className="children_arrow fas fa-angle-right"></i></div>:<NavDropdown.Item className="custom_dropdown" onMouseOver={(e)=>getboundingpoints(e,title,true,null)}>{obj.title}</NavDropdown.Item>
+        	return obj.children? <div className="dropdown_layer_nav"><NavDropdown.Item  className={`custom_dropdown `}  onMouseOver={(e)=>getboundingpoints(e,title,true,obj.children,null,history)}>{obj.title}</NavDropdown.Item><i onClick={(e)=>e.stopPropagation()} onMouseOver={(e)=>e.stopPropagation()} className="children_arrow fas fa-angle-right"></i></div>:<NavDropdown.Item onClick={(e)=>sendNavLink(obj,history)} className="custom_dropdown" onMouseOver={(e)=>getboundingpoints(e,title,true,null,null,history)}>{obj.title}</NavDropdown.Item>
         })
         }	 
 		</div>

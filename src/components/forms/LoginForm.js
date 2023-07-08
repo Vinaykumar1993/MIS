@@ -19,7 +19,7 @@ import { useHistory } from "react-router-dom";
 
      onSubmit: values => {
       history.push('/home');
-       alert(JSON.stringify(values, null, 2));
+      //  alert(JSON.stringify(values, null, 2));
      }
    });
 

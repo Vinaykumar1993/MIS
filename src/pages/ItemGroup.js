@@ -17,7 +17,7 @@ const ItemGroup =(props)=>{
 	return(
 		<div>
 		<Templatemaster>
-			<Templatemaster.TmpBreadCrumb addclick={()=>setshowmodal(true)}/>
+			<Templatemaster.TmpBreadCrumb title="Item Group Master" addclick={()=>setshowmodal(true)}/>
 			<Templatemaster.TmpTable/>
 			<Templatemaster.TmpModal title={"Item Group"} size="lg" show={showmodal} handleClose={setshowmodal}>
 				<Templatemaster.TmpForm onCancel={setshowmodal} fields={fields} initialvalues={initialvalues} yupschema={yupschema} />

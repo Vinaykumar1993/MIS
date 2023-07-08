@@ -7,7 +7,7 @@ const ItemMaster =(props)=>{
 	// console.log("samplemaster_fields",samplemaster_fields)
 	const [showmodal,setshowmodal]=useState(null),
 	fields=Itemschema,
-	initialvalues={category_name:"",group_name:"",item_code:"",item_name:"",strength:"",unit:"",package:"",no_of_expiry:"",status:""},
+	initialvalues={category_name:"",group_name:"",item_code:"",item_name:"",strength:"",unit:"",package:"",no_of_expiry:"",status:true},
 	yupschema=Yup.object({
        category_name: Yup.string().required('Required'),
        group_name: Yup.string().required('Required'),
@@ -17,12 +17,12 @@ const ItemMaster =(props)=>{
        unit: Yup.string().required('Required'),
        package: Yup.string().required('Required'),
        no_of_expiry: Yup.string().required('Required'),
-       status: Yup.string().required('Required'),
+       // status: Yup.string().required('Required'),
      });
 	return(
 		<div>
 		<Templatemaster>
-			<Templatemaster.TmpBreadCrumb addclick={()=>setshowmodal(true)}/>
+			<Templatemaster.TmpBreadCrumb title="Item Master" addclick={()=>setshowmodal(true)}/>
 			<Templatemaster.TmpTable/>
 			<Templatemaster.TmpModal title={"Item"} size="lg" show={showmodal} handleClose={setshowmodal}>
 				<Templatemaster.TmpForm onCancel={setshowmodal} fields={fields} initialvalues={initialvalues} yupschema={yupschema} />

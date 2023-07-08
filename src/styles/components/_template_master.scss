@@ -3,4 +3,27 @@
 	>.navbar{
 	padding:0
 	}
+
 }
+.loginform1{
+	.form_input_container{
+		margin-bottom: 10px;
+		display: flex;
+		// align-items: flex-end;
+		> div{
+			width: 100%;
+		}
+	}
+		select, input, .select_container{
+			// margin-bottom: 10px;
+		}
+		.form-check{
+			padding-top: 8px;
+			input{
+				padding: 9px;
+				margin:0;
+				margin-right: 8px;
+				border: 1px solid;
+			}
+		}
+	}
