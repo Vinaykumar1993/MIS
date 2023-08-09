@@ -11,6 +11,9 @@ import ItemCategory from '@pages/ItemCategory';
 import ItemGroup from '@pages/ItemGroup';
 import ItemMaster from '@pages/ItemMaster';
 import SupplierMaster from '@pages/SupplierMaster';
+import CompanyMaster from "@pages/CompanyMaster";
+import CustomerMaster from "@pages/CustomerMaster";
+import RackMaster from "@pages/RackMaster";
 
  const HomeRoutes=(props)=> {
   // console.log("props",props.match.url);
@@ -22,6 +25,9 @@ import SupplierMaster from '@pages/SupplierMaster';
           <Route path={`${path}/item_group`}><ItemGroup /></Route>
           <Route path={`${path}/item`}><ItemMaster /></Route>
           <Route path={`${path}/supplier`}><SupplierMaster /></Route>
+          <Route path={`${path}/company`}><CompanyMaster /></Route>
+          <Route path={`${path}/customer`}><CustomerMaster /></Route>
+          <Route path={`${path}/rack`}><RackMaster /></Route>
 
         </Switch>
   );

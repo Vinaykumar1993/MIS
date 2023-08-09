@@ -16,13 +16,13 @@ export const MasterMenu = [{
 	href: '/home/supplier'
 },{
 	title: 'Company Master',
-	link: ''
+	href: '/home/company'
 },{
 	title: 'Customer Master',
-	link: ''
+	href: '/home/customer'
 },{
 	title: 'Rack Master',
-	link: ''
+	href: '/home/rack'
 },{
 	title: 'Order Master',
 	link: ''
